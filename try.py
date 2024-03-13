@@ -9,9 +9,9 @@ class form:
     tl = test_locator()
 
     def data_fill(self):
-        self.e.max_screen()
+        self.e.browser_function("max")
         self.e.get(self.td.url)
-        self.e.implicit_wait(20)
+        self.e.wait("implicit",20)
         # first name
         self.e.element("name",self.tl.first_name_name).clear()
         self.e.element("name", self.tl.first_name_name, self.td.first_name)
@@ -54,7 +54,7 @@ class form:
         # button
         self.e.element("id", self.tl.button_id).click()
         print("Button clicked")
-        self.e.quit()
+        self.e.browser_function("quit")
 
 
 h = form()
