@@ -1,7 +1,3 @@
-from time import sleep
-
-from selenium.webdriver import Keys
-
 from act import Elements
 from data import test_data
 from locator import test_locator
