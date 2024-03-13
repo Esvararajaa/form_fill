@@ -14,14 +14,16 @@ class Elements:
     def __init__(self):
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
+    def browser_function(self, max_window=None, quit=None, close=None):
+        if max_window.lower() == "maximize" or "max" or "max_window" or "maximize window":
+            return self.driver.maximize_window()
+        if quit.lower() == "quit" or "quit browser":
+            return self.driver.quit()
+        if close.lower() == "close" or "close tab":
+            return self.driver.close()
+
     def get(self, url):
         return self.driver.get(url)
-
-    def max_screen(self):
-        return self.driver.maximize_window()
-
-    def quit(self):
-        return self.driver.quit()
 
     def element(self, locator, value, key=None):
         if key is None:
@@ -65,23 +67,22 @@ class Elements:
         if button.lower() == "right":
             return ActionChains(self.driver).send_keys(Keys.RIGHT).perform()
 
-    def implicit_wait(self, time):
-        return self.driver.implicitly_wait(time)
-
-    def explicit_wait(self, time, locator, value):
-        if locator.lower() == "xpath":
+    def wait(self, type, time, locator=None, value=None):
+        if type.lower() == "implicit" or "implicitly" or "implicit wait" or "implicitly wait":
+            return self.driver.implicitly_wait(time)
+        if locator.lower() == "xpath" and type.lower() == "explicit" or "explicitly" or "explicit wait" or "explicitly wait":
             return WebDriverWait(self.driver, time).until(EC.presence_of_element_located((By.XPATH, value)))
-        if locator.lower() == "id":
+        if locator.lower() == "id" and type.lower() == "explicit" or "explicitly" or "explicit wait" or "explicitly wait":
             return WebDriverWait(self.driver, time).until(EC.presence_of_element_located((By.ID, value)))
-        if locator.lower() == "name":
+        if locator.lower() == "name" and type.lower() == "explicit" or "explicitly" or "explicit wait" or "explicitly wait":
             return WebDriverWait(self.driver, time).until(EC.presence_of_element_located((By.NAME, value)))
-        if locator.lower() == "css":
+        if locator.lower() == "css" and type.lower() == "explicit" or "explicitly" or "explicit wait" or "explicitly wait":
             return WebDriverWait(self.driver, time).until(EC.presence_of_element_located((By.CSS_SELECTOR, value)))
-        if locator.lower() == "class":
+        if locator.lower() == "class" and type.lower() == "explicit" or "explicitly" or "explicit wait" or "explicitly wait":
             return WebDriverWait(self.driver, time).until(EC.presence_of_element_located((By.CLASS_NAME, value)))
-        if locator.lower() == "link text":
+        if locator.lower() == "link text" and type.lower() == "explicit" or "explicitly" or "explicit wait" or "explicitly wait":
             return WebDriverWait(self.driver, time).until(EC.presence_of_element_located((By.LINK_TEXT, value)))
-        if locator.lower() == "partial link text":
+        if locator.lower() == "partial link text" and type.lower() == "explicit" or "explicitly" or "explicit wait" or "explicitly wait":
             return WebDriverWait(self.driver, time).until(EC.presence_of_element_located((By.PARTIAL_LINK_TEXT, value)))
         # self.wait.until((EC.presence_of_element_located((locator, value)))
         # self.wait.until((EC.element_located_to_be_selected((locator, value)))
